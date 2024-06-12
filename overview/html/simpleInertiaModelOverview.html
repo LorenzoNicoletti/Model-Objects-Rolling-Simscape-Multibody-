@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Model Objects Rolling Down a Ramp with Simscape Multibody</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-12">
+<meta name="DC.source" content="simpleInertiaModelOverview.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Model Objects Rolling Down a Ramp with Simscape Multibody</h1>
+<!--introduction-->
+<p>The model simulates four objects (a sphere, a hollow sphere, a cylinder, and a hollow cylinder) moving down a ramp. These four objects have been selected because they have very similar geometrical properties, but can have very different inertias. The objects have been modeled with the intention of isolating inertia as the primary variable affecting their motion down the ramp. All objects have the same radius and mass, but differ in their inertias. This approach allows for a focused exploration of how mass distribution within an object influences its rolling behavior.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">Model Overview</a>
+</li>
+<li>
+<a href="#3">Solid Object Model</a>
+</li>
+<li>
+<a href="#4">Contact Model</a>
+</li>
+<li>
+<a href="#5">Parametrization</a>
+</li>
+<li>
+<a href="#6">Analyze Results: Position over time</a>
+</li>
+<li>
+<a href="#7">Analyze Results: Energy over time</a>
+</li>
+</ul>
+</div>
+<p>
+<img vspace="5" hspace="5" src="modelISOImage.png" alt=""> </p>
+<h2 id="2">Model Overview</h2>
+<p>Once the model is open, you can perform different modifications (such as activating or deactivating friction) by clicking on the links provided in the model canvas:</p>
+<img vspace="5" hspace="5" src="simpleInertiaModelOverview_01.png" alt=""> <h2 id="3">Solid Object Model</h2>
+<p>The figure below shows how the sphere is modeled. The sphere is modeled using a Solid Block and is connected with the main reference system with the <b>Joint</b> subsystem. The Joint subsystem defines the degrees of freedom of the sphere, allowing it to slide along the ramp and to rotate. The subsystem <b>Height Sensor</b> monitors the height of the sphere over time. If the sphere reaches the edge of the ramp first, the height sensor will stop the simulation to prevent it from falling over the ramp's edge. The other objects (hollow sphere, cylinder, and hollow cylinder) are modeled in a similar way.</p>
+<img vspace="5" hspace="5" src="simpleInertiaModelOverview_02.png" alt=""> <h2 id="4">Contact Model</h2>
+<p>The contact between the objects and the ramp is modeled using a <b>Spatial Contact Force</b> block. The block calculates a friction force based on the reaction force of the ramp (it is also possible to deactivate the friction force if desired). Additionally, stiffness and damping values are provided in the block that are used to determine how the objects are deformed due to their reaction force. Finally, the subsystem <b>Calculate Energy</b> logs the contact variables and estimates the energy lost in the contact between objects and ramp.</p>
+<img vspace="5" hspace="5" src="simpleInertiaModelOverview_03.png" alt=""> <h2 id="5">Parametrization</h2>
+<p>The model is parametrized with the script <a href="matlab:open('simpleInertiaModelParam');">simpleInertiaModelParam.mlx</a>. In the script you can change the dimensions of the ramp and of the objects, as well as their mass and color. Once the simulation is started, the objects will start moving along the ramp. The simulation automatically stops as soon as the first object has reached the edge of the ramp. You can decide whether to simulate the model with or without friction by clicking on the links provided in the model canvas. If friction is activated, the friction force will apply a torque to the objects, inducing them to roll. In this case, the inertia will have an impact on how the objects' motion. If friction is deactivated, there is no force building a torque. Consequently, the objects will simply slide along the ramp. As they are sliding and not rolling, the inertia will not impact their movement.</p>
+<h2 id="6">Analyze Results: Position over time</h2>
+<p>After simulating the model, you can analyze the motion of the objects as they roll or slide along the ramp. The links in the model canvas can be clicked to activate different post processing functionalities.</p>
+<img vspace="5" hspace="5" src="simpleInertiaModelOverview_04.png" alt=""> <h2 id="7">Analyze Results: Energy over time</h2>
+<p>Since all four object have the same mass, they will also have the same potential energy at the beginning of the simulation (provided that they are placed at the same height). With the function <a href="matlab:open('visualizeEnergy');">visualizeEnergy</a> (which can also be called from the model canvas), you can analyze the object's energy over time.</p>
+<img vspace="5" hspace="5" src="simpleInertiaModelOverview_05.png" alt=""> <img vspace="5" hspace="5" src="simpleInertiaModelOverview_06.png" alt=""> <img vspace="5" hspace="5" src="simpleInertiaModelOverview_07.png" alt=""> <img vspace="5" hspace="5" src="simpleInertiaModelOverview_08.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Model Objects Rolling Down a Ramp with Simscape Multibody
+%
+% The model simulates four objects (a sphere, a hollow sphere, a cylinder, 
+% and a hollow cylinder) moving down a ramp. These four objects have been
+% selected because they have very similar geometrical properties, but can
+% have very different inertias. The objects have been modeled with the intention of isolating inertia as 
+% the primary variable affecting their motion down the ramp. All objects have
+% the same radius and mass, but differ in their inertias. This approach 
+% allows for a focused exploration of how mass distribution within an object 
+% influences its rolling behavior.
+%%
+% <<modelISOImage.png>>
+
+%% Model Overview
+%
+% Once the model is open, you can perform different modifications (such as activating or deactivating friction) by clicking on
+% the links provided in the model canvas:
+
+open_system('simpleInertiaModel')
+
+set_param(find_system('simpleInertiaModel','MatchFilter',@Simulink.match.allVariants,'FindAll', 'on','SearchDepth',1,'type','annotation','Tag','ModelFeatures'),'Interpreter','off')
+
+%% Solid Object Model
+%
+% The figure below shows how the sphere is modeled. The sphere is modeled 
+% using a Solid Block and is connected with the main reference system with the *Joint* subsystem.
+% The Joint subsystem defines the degrees of freedom of the sphere,
+% allowing it to slide along the ramp and to rotate. The
+% subsystem *Height Sensor* monitors the height of the sphere over time. If
+% the sphere reaches the edge of the ramp first, the height sensor will
+% stop the simulation to prevent it from falling over the ramp's edge.
+% The other objects (hollow sphere, cylinder, and hollow cylinder) are modeled in a similar way.
+
+open_system('simpleInertiaModel/S','force');
+
+%% Contact Model
+%
+% The contact between the objects and the ramp is modeled using a *Spatial
+% Contact Force* block. The block calculates a friction force based on the reaction force of the ramp (it is also possible to deactivate the friction force if desired).
+% Additionally, stiffness and damping values are provided in the block that
+% are used to determine how the objects are deformed due to their reaction force.
+% Finally, the subsystem *Calculate Energy* logs the contact variables and estimates the energy lost in the contact between objects and ramp.
+
+open_system('simpleInertiaModel/ContactS','force');
+
+%% Parametrization
+%
+% The model is parametrized with the script
+% <matlab:open('simpleInertiaModelParam'); simpleInertiaModelParam.mlx>. In
+% the script you can change the dimensions of the ramp and of the
+% objects, as well as their mass and color.
+% Once the simulation is started, the objects will start moving along the ramp.
+% The simulation automatically stops as soon as the first object has reached
+% the edge of the ramp. You can decide whether to simulate the model with or without
+% friction by clicking on the links provided in the model canvas.
+% If friction is activated, the friction force will apply a torque to the objects,
+% inducing them to roll. In this case, the inertia will have an
+% impact on how the objects' motion.
+% If friction is deactivated, there is no force building a torque. Consequently, the objects will simply slide along the ramp.
+% As they are sliding and not rolling, the inertia will not impact their movement.
+
+%% Analyze Results: Position over time
+%
+% After simulating the model, you can analyze the motion of the objects as
+% they roll or slide along the ramp. The links in the model
+% canvas can be clicked to activate different post processing
+% functionalities.
+
+% The function <matlab:open('visualizeHeight'); visualizeHeight> plots the
+% height of the objects' center of mass over time and generates a plot like the one shown below (in the reference system used in this model the height is zero at the edge of the ramp).
+% In the example below, friction was active and the
+% object with the smallest inertia (the sphere) reaches the
+% edge of the ramp first. Consequently, when the simulation stops, the
+% sphere has the lowest value (actually corresponding to the height at the ramp edge - which is zero as stated above - plus the radius of the sphere).
+ssmInertia = sim(bdroot);
+visualizeHeight(ssmInertia);
+
+%% Analyze Results: Energy over time
+%
+% Since all four object have the same mass, they will also have the same
+% potential energy at the beginning of the simulation (provided that they
+% are placed at the same height). With the function <matlab:open('visualizeEnergy'); visualizeEnergy> 
+% (which can also be called from the model canvas), you can analyze the object's energy over time. 
+
+% As the objects roll along the ramp, their potential energy decreases and
+% is converted into kinetic energy. Depending on the parametrization, some
+% energy will also be lost due to the contact damping with the ramp.
+% The script plots an overview of the energy components for each object
+% so that you can analyze how energy is converted as the objects roll or
+% slide along the ramp:
+visualizeEnergy(ssmInertia,physics,objects);
+
+%%
+bdclose('simpleInertiaModel')
+close all
+clear
+
+##### SOURCE END #####
+-->
+</body>
+</html>
