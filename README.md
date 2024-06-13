@@ -46,4 +46,6 @@ This model was built in MATLAB&reg; R2024a and requires the following products:
 If you have a MathWorks account but do not have a 24a release, you can open this example in the newest MATLAB release using MATLAB Online: [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=LorenzoNicoletti/Model-Objects-Rolling-Simscape-Multibody-)
 
 ## Authors and acknowledgment
-Lorenzo Nicoletti, [LinkedIn](https://www.linkedin.com/in/lorenzonicolettiphd/)
+Created by Lorenzo Nicoletti
+For more Simscape content, follow me on [![Linkedin](https://i.sstatic.net/gVE0j.png)](https://www.linkedin.com/in/lorenzonicolettiphd/)
+
