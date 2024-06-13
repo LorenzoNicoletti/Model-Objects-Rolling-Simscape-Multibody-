@@ -1,7 +1,5 @@
-## Model Objects Rolling Down a Ramp with Simscape Multibody
+## Model Objects Rolling Down a Ramp with Simscape Multibody [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=LorenzoNicoletti/Model-Objects-Rolling-Simscape-Multibody-)
 The model simulates four objects (a sphere, a hollow sphere, a cylinder, and a hollow cylinder) moving down a ramp. These four objects have been selected because they have very similar geometrical properties, but can have very different inertias. The objects have been modeled with the intention of isolating inertia as the primary variable affecting their motion down the ramp. All objects have the same radius and mass, but differ in their inertias. This approach allows for a focused exploration of how mass distribution within an object influences its rolling behavior. 
-
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=LorenzoNicoletti/Model-Objects-Rolling-Simscape-Multibody-)
 
 ![Model Overview](overview/html/modelISOImage.png)
 
@@ -44,6 +42,8 @@ This model was built in MATLAB&reg; R2024a and requires the following products:
 - Simulink&reg;
 - Simscape&trade;
 - Simscape&trade; Multibody&trade;
+  
+If you have a MathWorks account but do not have a 24a release, you can open this example in the newest MATLAB release using MATLAB Online: [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=LorenzoNicoletti/Model-Objects-Rolling-Simscape-Multibody-)
 
 ## Authors and acknowledgment
 Lorenzo Nicoletti, [LinkedIn](https://www.linkedin.com/in/lorenzonicolettiphd/)
